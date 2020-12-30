@@ -1,21 +1,30 @@
-import { useState, useEffect } from 'react';
-import './style/App.css';
-import Gameboard from './components/Gameboard'
+import { useState } from "react";
+import "./style/App.css";
+import Gameboard from "./components/Gameboard";
 
 function App() {
-  const [topScore, setTopScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
   const [currentScore, setCurrentScore] = useState(0);
 
   return (
     <div className="App">
       <div className="Header">
         <div className="Title">Celebrity Memory Game</div>
-        <div className="Scoreboard">Score: {currentScore} Top Score: {topScore}</div>
+        <div className="Scoreboard">
+          Score: {currentScore} High Score: {highScore}
+        </div>
       </div>
       <div className="Instructions">
-        Get points by clicking on an image but don't click on any more than once!
+        Get points by clicking on an image but don't click on any more than
+        once!
       </div>
-      <Gameboard tileCount={10}/>
+      <Gameboard
+        tileCount={10}
+        highScore={highScore}
+        setHighScore={setHighScore}
+        currentScore={currentScore}
+        setCurrentScore={setCurrentScore}
+      />
     </div>
   );
 }

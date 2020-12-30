@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../style/Gameboard.css";
 
 const Tile = (props) => {
@@ -10,39 +10,55 @@ const Tile = (props) => {
 };
 
 const Gameboard = (props) => {
-  const [currentScore, setCurrentScore] = useState(0);
-  const [highScore, setHighScore] = useState(props.highScore);
-  const [previouslyClicked, setPreviouslyClicked] = useState([]);
-  const [tiles, setTiles] = useState(generateTiles(props.tileCount));
+  const [tiles, setTiles] = useState([]);
+  const [previouslySeen, setPreviouslySeen] = useState([]);
+
+  const handleClick = (evt) => {
+    const tile = evt.target;
+    console.log(previouslySeen)
+    if (!previouslySeen.includes(tile)) {
+      props.setCurrentScore(current => current + 1);
+      setPreviouslySeen(previousState => [...previousState, tile]);
+    } else {
+      alert("Game over, thanks for playing!");
+      if (props.currentScore > props.highScore) {
+        props.setHighScore(props.currentScore);
+      }
+      props.setCurrentScore(0);
+      setPreviouslySeen([]);
+    }
+  };
 
   const generateTiles = (tileCount) => {
-    return [...Array(props.tileCount).keys()].map((n) => {
-      return <Tile key={n} number={n} />;
+    return [...Array(tileCount).keys()].map((n) => {
+      return <Tile key={n} number={n} handleClick={handleClick} />;
     });
   };
 
   const shuffleTiles = (tiles) => {
     let tilesCopy = [...tiles];
+
     for (let i = tilesCopy.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * i);
       const temp = tilesCopy[i];
       tilesCopy[i] = tilesCopy[j];
       tilesCopy[j] = temp;
     }
-    setTiles(tilesCopy);
-  };
-  // TODO look at lifecycle methods for when stuff should re-render
 
-  // See if new high score was achieved, set new high score if applicable, set current score to 0
-  const handleClick = (evt) => {
-    if (isGameOver(evt.target.value)) {
-
-    }
+    return tilesCopy;
   };
 
-  const isGameOver = (val) => {
-      return previouslyClicked.includes(val);
-  }
+  useEffect(() => {
+    const initialTiles = generateTiles(props.tileCount);
+    setTiles(shuffleTiles(initialTiles));
+  }, []);
+
+  useEffect(() => {
+    setTiles((oldTiles) => {
+      const newTiles = shuffleTiles(oldTiles);
+      return newTiles;
+    });
+  }, [props.currentScore, props.highScore]);
 
   return <div className="Gameboard">{tiles}</div>;
 };

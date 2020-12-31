@@ -3,7 +3,7 @@ import "../style/Gameboard.css";
 
 const Tile = (props) => {
   return (
-    <div className="Tile" onClick={props.handleClick}>
+    <div className="Tile" key={props.number} value={props.number} onClick={props.handleClick}>
       {props.number}
     </div>
   );
@@ -14,11 +14,11 @@ const Gameboard = (props) => {
   const [previouslySeen, setPreviouslySeen] = useState([]);
 
   const handleClick = (evt) => {
-    const tile = evt.target;
-    console.log(previouslySeen)
-    if (!previouslySeen.includes(tile)) {
+    const tileValue = evt.target.innerText;
+    console.log(previouslySeen);
+    if (!previouslySeen.includes(tileValue)) {
       props.setCurrentScore(current => current + 1);
-      setPreviouslySeen(previousState => [...previousState, tile]);
+      setPreviouslySeen(previousState => [...previousState, tileValue]);
     } else {
       alert("Game over, thanks for playing!");
       if (props.currentScore > props.highScore) {

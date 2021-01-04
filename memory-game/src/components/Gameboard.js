@@ -11,21 +11,23 @@ const Tile = (props) => {
 
 const Gameboard = (props) => {
   const [tiles, setTiles] = useState([]);
-  const [previouslySeen, setPreviouslySeen] = useState([]);
+  let previouslySeen = [];
 
   const handleClick = (evt) => {
     const tileValue = evt.target.innerText;
     console.log(previouslySeen);
     if (!previouslySeen.includes(tileValue)) {
       props.setCurrentScore(current => current + 1);
-      setPreviouslySeen(previousState => [...previousState, tileValue]);
+      previouslySeen = [...previouslySeen, tileValue];
     } else {
       alert("Game over, thanks for playing!");
+      console.log(props.currentScore)
+      console.log(props.highScore)
       if (props.currentScore > props.highScore) {
         props.setHighScore(props.currentScore);
-      }
+      };
       props.setCurrentScore(0);
-      setPreviouslySeen([]);
+      previouslySeen = [];
     }
   };
 
@@ -58,7 +60,10 @@ const Gameboard = (props) => {
       const newTiles = shuffleTiles(oldTiles);
       return newTiles;
     });
-  }, [props.currentScore, props.highScore]);
+    if (props.currentScore > props.highScore) {
+      props.setHighScore(props.currentScore);
+    }
+  }, [props.currentScore]);
 
   return <div className="Gameboard">{tiles}</div>;
 };

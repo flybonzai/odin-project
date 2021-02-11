@@ -1,3 +1,20 @@
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 .main-nav {
   background-color: red;
+}
+
+.secondary-nav-item {
+  font-weight: bold;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+  color: red;
+}
+
+.main-content h5 {
+  color: rgb(92, 86, 86);
 }

@@ -4,6 +4,7 @@ import {
   Col,
   Container,
   Form,
+  Image,
   Nav,
   Navbar,
   Row,
@@ -130,7 +131,7 @@ function App() {
           <h5>My Turn</h5>
           <Row>
             <Col>
-              <img src={"https://source.unsplash.com/random"} />
+              <Image src={"https://source.unsplash.com/random"} />
               <p>At 23, I discovered I had a secret sister!</p>
             </Col>
             <Col>

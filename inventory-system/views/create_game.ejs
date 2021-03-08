@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2 sidebar">
+            <%- include('sidebar') -%>
+        </div>
+        <div class="col-sm-10 content">
+            <h1>Add New Game</h1>
+            <form action="/inventory/games/create" method="post">
+                <label for="title">Title: </label><br>
+                <input id="title" type="text" name="title"><br>
+                <label for="description">Description: </label><br>
+                <input id="description" type="text" name="description"><br>
+                <label for="genre">Genre: </label><br>
+                <select id="genre" name="genre">
+                    <% genres.forEach( function (genre) { %>
+                        <option value="<%= genre.name %>"><%= genre.name %></option>
+                    <% }) %>
+                </select><br>
+                <label for="price" >Price: </label><br>
+                <input id="price" type="number" name="price"><br>
+                <label for="num-in-stock">Number in Stock: </label><br>
+                <input id="num-in-stock" type="number" name="num-in-stock"><br>
+                <label for="release-date">Release Date: </label><br>
+                <input id="release-date" type="date" name="release-date"><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
